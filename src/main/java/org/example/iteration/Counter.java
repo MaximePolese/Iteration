@@ -1,18 +1,29 @@
+// src/main/java/org/example/iteration/Counter.java
 package org.example.iteration;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 import static java.lang.Thread.sleep;
 
+@Entity
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Counter {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
+
     private int count;
+
+    public Counter() {
+    }
 
     public Counter(int id) {
         this.id = id;
         this.count = 0;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public int getCount() {
