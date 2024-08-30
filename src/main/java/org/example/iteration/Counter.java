@@ -20,6 +20,7 @@ public class Counter {
     }
 
     public int increment(int increment) {
+        // Simulate a long running operation
         int count = getCount();
         try {
             sleep(1000);
