@@ -16,6 +16,8 @@ public class IterationApplication {
 
     private final CounterRepository counterRepository;
 
+    private final CounterService counterService;
+
     @GetMapping("/hello")
     public String sayHello(@RequestParam(value = "myName", defaultValue = "World") String name) {
         return String.format("Hello %s!", name);
@@ -31,10 +33,8 @@ public class IterationApplication {
 
     @PostMapping("/counters/{counterId}")
     public Counter incrementCounter(@PathVariable int counterId, @RequestBody int increment) {
-        Counter counter = counterRepository.getReferenceById(counterId);
-        int result = counter.increment(increment);
-        log.info("Counter " + counterId + " incremented by " + increment + " to " + result);
-        counterRepository.save(counter);
+        Counter counter = counterService.incrementCounter(counterId, increment);
+        log.info("Counter " + counterId + " incremented by " + increment + " to " + counter.getCount());
         return counter;
     }
 
