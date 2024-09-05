@@ -25,16 +25,16 @@ public class IterationApplication {
 
     @GetMapping("/counters/{counterId}")
     public int getCount(@PathVariable int counterId) {
-        Counter counter = counterRepository.getReferenceById(counterId);
+        Counter counter = counterRepository.findById(String.valueOf(counterId)).orElseThrow(() -> new RuntimeException("Counter not found"));
         int count = counter.getCount();
-        log.info("Counter " + counterId + " has count " + count);
+        log.info("Counter {} has count {}", counterId, count);
         return count;
     }
 
     @PostMapping("/counters/{counterId}")
     public Counter incrementCounter(@PathVariable int counterId, @RequestBody int increment) {
         Counter counter = counterService.incrementCounter(counterId, increment);
-        log.info("Counter " + counterId + " incremented by " + increment + " to " + counter.getCount());
+        log.info("Counter {} incremented by {} to {}", counterId, increment, counter.getCount());
         return counter;
     }
 
